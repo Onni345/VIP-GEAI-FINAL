@@ -1,137 +1,67 @@
 <?xml version="1.0"?>
-<mujoco model="dog_maze">
+<mujoco model="scratch_maze_tall">
   <compiler angle="radian" coordinate="local"/>
   <option gravity="0 0 -9.81" timestep="0.01" integrator="RK4"/>
 
   <default>
-    <geom contype="1" conaffinity="1" friction="1 0.1 0.1" rgba="0.4 0.4 0.6 1"/>
-    <site size="0.25" rgba="0 1 0 1"/>
+    <geom contype="1" conaffinity="1" friction="1 0.1 0.1" rgba="0.45 0.45 0.6 1"/>
+    <site size="0.28" rgba="0 1 0 1"/>
   </default>
 
   <asset>
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
-    <texture name="floor_tex" type="2d" builtin="checker" rgb1="0.2 0.2 0.2" rgb2="0.3 0.3 0.3" width="512" height="512"/>
+    <texture name="floor_tex" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.25 0.25 0.25" rgb2="0.35 0.35 0.35"/>
     <material name="floor_mat" texture="floor_tex" texrepeat="6 6" reflectance="0.2"/>
-    <material name="wall_mat" rgba="0.55 0.6 0.75 1"/>
+    <material name="wall_mat"  rgba="0.55 0.6 0.75 1"/>
     <material name="entry_mat" rgba="1 0.6 0 1"/>
     <material name="exit_mat"  rgba="0 0.9 0.2 1"/>
   </asset>
 
   <worldbody>
-    <geom name="floor" type="plane" size="6 6 0.1" material="floor_mat"/>
-    <geom name="north_left"  type="box" size="1 0.1 0.35" pos="-5 6 0.35" material="wall_mat"/>
-    <geom name="north_right" type="box" size="4 0.1 0.35" pos="2 6 0.35"  material="wall_mat"/>
-    <geom name="south_left"  type="box" size="4 0.1 0.35" pos="-2 -6 0.35" material="wall_mat"/>
-    <geom name="south_right" type="box" size="1 0.1 0.35" pos="5 -6 0.35"  material="wall_mat"/>
-    <geom name="east"  type="box" size="0.1 6 0.35" pos="6 0 0.35"  material="wall_mat"/>
-    <geom name="west"  type="box" size="0.1 6 0.35" pos="-6 0 0.35" material="wall_mat"/>
+    <geom name="floor" type="plane" pos="0 0 -0.02" size="6 6 0.1" material="floor_mat"/>
 
-    <site name="entry" pos="-4 5.9 0.1"  size="0.45" material="entry_mat"/>
-    <site name="exit"  pos="4 -5.9 0.1" size="0.45" material="exit_mat"/>
+    <!-- outer frame with 0.8-m-wide gaps at entry & exit -->
+    <geom name="wall_n" type="box" size="5   0.12 0.6" pos="0     3    0.6" material="wall_mat"/>
+    <geom name="wall_s_l" type="box" size="2.6 0.12 0.6" pos="-2.4 -3 0.6" material="wall_mat"/>
+    <geom name="wall_s_r" type="box" size="2.6 0.12 0.6" pos=" 2.4 -3 0.6" material="wall_mat"/>
+    <geom name="wall_w_u" type="box" size="0.12 1.6 0.6" pos="-5  1.4 0.6" material="wall_mat"/>
+    <geom name="wall_w_d" type="box" size="0.12 1.6 0.6" pos="-5 -1.4 0.6" material="wall_mat"/>
+    <geom name="wall_e_u" type="box" size="0.12 1.6 0.6" pos=" 5  1.4 0.6" material="wall_mat"/>
+    <geom name="wall_e_d" type="box" size="0.12 1.6 0.6" pos=" 5 -1.4 0.6" material="wall_mat"/>
 
-    <geom name="h4a" type="box" size="2   0.1 0.3" pos="0  4 0.3" material="wall_mat"/>
-    <geom name="h4b" type="box" size="1   0.1 0.3" pos="4  4 0.3" material="wall_mat"/>
-    <geom name="h2a" type="box" size="1.5 0.1 0.3" pos="-4  2 0.3" material="wall_mat"/>
-    <geom name="h2b" type="box" size="1.5 0.1 0.3" pos="0  2 0.3"  material="wall_mat"/>
-    <geom name="h2c" type="box" size="2   0.1 0.3" pos="4  2 0.3"  material="wall_mat"/>
-    <geom name="h0a" type="box" size="2   0.1 0.3" pos="-2  0 0.3" material="wall_mat"/>
-    <geom name="h0b" type="box" size="1   0.1 0.3" pos="3  0 0.3"  material="wall_mat"/>
-    <geom name="hm2a" type="box" size="1   0.1 0.3" pos="-5 -2 0.3" material="wall_mat"/>
-    <geom name="hm2b" type="box" size="2   0.1 0.3" pos="1 -2 0.3"  material="wall_mat"/>
-    <geom name="hm2c" type="box" size="1.5 0.1 0.3" pos="5 -2 0.3" material="wall_mat"/>
-    <geom name="hm4a" type="box" size="1.5 0.1 0.3" pos="-1 -4 0.3" material="wall_mat"/>
-    <geom name="hm4b" type="box" size="2   0.1 0.3" pos="3 -4 0.3"  material="wall_mat"/>
+    <!-- horizontal interior walls -->
+    <geom name="h1"  type="box" size="1.6 0.12 0.55" pos="-2.4  2   0.55" material="wall_mat"/>
+    <geom name="h2"  type="box" size="2.3 0.12 0.55" pos=" 0.7  2   0.55" material="wall_mat"/>
+    <geom name="h3"  type="box" size="1.3 0.12 0.55" pos="-3.7  1   0.55" material="wall_mat"/>
+    <geom name="h4"  type="box" size="1.0 0.12 0.55" pos="-0.9  1   0.55" material="wall_mat"/>
+    <geom name="h5"  type="box" size="1.3 0.12 0.55" pos=" 2.6  1   0.55" material="wall_mat"/>
+    <geom name="h6"  type="box" size="2.4 0.12 0.55" pos=" 0.0  0   0.55" material="wall_mat"/>
+    <geom name="h7"  type="box" size="1.2 0.12 0.55" pos=" 3.4  0   0.55" material="wall_mat"/>
+    <geom name="h8"  type="box" size="2.6 0.12 0.55" pos="-2.2 -1  0.55" material="wall_mat"/>
+    <geom name="h9"  type="box" size="1.5 0.12 0.55" pos=" 1.7 -1  0.55" material="wall_mat"/>
+    <geom name="h10" type="box" size="1.5 0.12 0.55" pos="-3.6 -2  0.55" material="wall_mat"/>
+    <geom name="h11" type="box" size="2.4 0.12 0.55" pos=" 0.4 -2  0.55" material="wall_mat"/>
+    <geom name="h12" type="box" size="1.6 0.12 0.55" pos=" 3.4 -2  0.55" material="wall_mat"/>
 
-    <geom name="v_-4_a" type="box" size="0.1 1 0.3" pos="-4  5 0.3" material="wall_mat"/>
-    <geom name="v_-4_b" type="box" size="0.1 1 0.3" pos="-4  1 0.3" material="wall_mat"/>
-    <geom name="v_-4_c" type="box" size="0.1 1 0.3" pos="-4 -3 0.3" material="wall_mat"/>
-    <geom name="v_-2_a" type="box" size="0.1 1 0.3" pos="-2  3 0.3" material="wall_mat"/>
-    <geom name="v_-2_b" type="box" size="0.1 1 0.3" pos="-2 -1 0.3" material="wall_mat"/>
-    <geom name="v_-2_c" type="box" size="0.1 1 0.3" pos="-2 -5 0.3" material="wall_mat"/>
-    <geom name="v0_a"  type="box" size="0.1 1 0.3" pos="0  5 0.3" material="wall_mat"/>
-    <geom name="v0_b"  type="box" size="0.1 1 0.3" pos="0  1 0.3" material="wall_mat"/>
-    <geom name="v0_c"  type="box" size="0.1 1 0.3" pos="0 -3 0.3" material="wall_mat"/>
-    <geom name="v2_a"  type="box" size="0.1 1 0.3" pos="2  3 0.3" material="wall_mat"/>
-    <geom name="v2_b"  type="box" size="0.1 1 0.3" pos="2 -1 0.3" material="wall_mat"/>
-    <geom name="v4_a"  type="box" size="0.1 1 0.3" pos="4  5 0.3" material="wall_mat"/>
-    <geom name="v4_b"  type="box" size="0.1 1 0.3" pos="4  1 0.3" material="wall_mat"/>
-    <geom name="v4_c"  type="box" size="0.1 1 0.3" pos="4 -3 0.3" material="wall_mat"/>
+    <!-- vertical interior walls -->
+    <geom name="v1"  type="box" size="0.12 1.0 0.55" pos="-4  1.5 0.55" material="wall_mat"/>
+    <geom name="v2"  type="box" size="0.12 1.3 0.55" pos="-2  1.5 0.55" material="wall_mat"/>
+    <geom name="v3"  type="box" size="0.12 1.0 0.55" pos=" 0  1.5 0.55" material="wall_mat"/>
+    <geom name="v4"  type="box" size="0.12 1.0 0.55" pos=" 2  1.5 0.55" material="wall_mat"/>
+    <geom name="v5"  type="box" size="0.12 1.3 0.55" pos=" 4  1.5 0.55" material="wall_mat"/>
+    <geom name="v6"  type="box" size="0.12 1.0 0.55" pos="-3  0.5 0.55" material="wall_mat"/>
+    <geom name="v7"  type="box" size="0.12 1.3 0.55" pos="-1  0.5 0.55" material="wall_mat"/>
+    <geom name="v8"  type="box" size="0.12 1.0 0.55" pos=" 1  0.5 0.55" material="wall_mat"/>
+    <geom name="v9"  type="box" size="0.12 1.3 0.55" pos=" 3  0.5 0.55" material="wall_mat"/>
+    <geom name="v10" type="box" size="0.12 1.0 0.55" pos="-4 -0.5 0.55" material="wall_mat"/>
+    <geom name="v11" type="box" size="0.12 1.0 0.55" pos="-2 -0.5 0.55" material="wall_mat"/>
+    <geom name="v12" type="box" size="0.12 1.3 0.55" pos=" 0 -0.5 0.55" material="wall_mat"/>
+    <geom name="v13" type="box" size="0.12 1.0 0.55" pos=" 2 -0.5 0.55" material="wall_mat"/>
+    <geom name="v14" type="box" size="0.12 1.3 0.55" pos=" 4 -0.5 0.55" material="wall_mat"/>
+
+    <site name="entry" pos="-4.5 2.8 0.12" size="0.48" material="entry_mat"/>
+    <site name="exit"  pos=" 4.5 -2.8 0.12" size="0.48" material="exit_mat"/>
 
     <light diffuse="0.85 0.85 0.85" pos="0 0 6" dir="0 0 -1"/>
-
-    <body name="dog" pos="-4.5 5.5 0.25">
-      <geom name="torso" type="box" size="0.18 0.09 0.06" rgba="0.8 0.6 0.4 1"/>
-
-      <body name="head" pos="0.18 0 0">
-        <joint name="neck" type="hinge" axis="0 0 1" range="-0.8 0.8"/>
-        <geom name="head_geom" type="box" size="0.08 0.06 0.04" rgba="0.8 0.6 0.4 1"/>
-        <geom name="eye_l" type="sphere" size="0.01" pos="0.06 0.03 0.01" rgba="0 0 0 1"/>
-        <geom name="eye_r" type="sphere" size="0.01" pos="0.06 -0.03 0.01" rgba="0 0 0 1"/>
-        <geom name="nose"  type="sphere" size="0.01" pos="0.08 0 0" rgba="0 0 0 1"/>
-        <site name="sensor_front" pos="0.11 0 0" size="0.01"/>
-        <site name="sensor_left"  pos="0.06 0.09 0" size="0.01"/>
-        <site name="sensor_right" pos="0.06 -0.09 0" size="0.01"/>
-      </body>
-
-      <body name="FL" pos="0.11 0.10 -0.06">
-        <joint name="fl_joint" type="hinge" axis="0 1 0" range="-0.6 0.6"/>
-        <geom name="fl_leg" type="capsule" size="0.012" fromto="0 0 0 0 0 -0.12" rgba="0.8 0.6 0.4 1"/>
-        <body name="FL_foot" pos="0 0 -0.12">
-          <joint name="fl_ankle" type="hinge" axis="0 1 0" range="-0.4 0.4"/>
-          <geom name="fl_foot" type="sphere" size="0.022" rgba="0.3 0.3 0.3 1"/>
-        </body>
-      </body>
-
-      <body name="FR" pos="0.11 -0.10 -0.06">
-        <joint name="fr_joint" type="hinge" axis="0 1 0" range="-0.6 0.6"/>
-        <geom name="fr_leg" type="capsule" size="0.012" fromto="0 0 0 0 0 -0.12" rgba="0.8 0.6 0.4 1"/>
-        <body name="FR_foot" pos="0 0 -0.12">
-          <joint name="fr_ankle" type="hinge" axis="0 1 0" range="-0.4 0.4"/>
-          <geom name="fr_foot" type="sphere" size="0.022" rgba="0.3 0.3 0.3 1"/>
-        </body>
-      </body>
-
-      <body name="BL" pos="-0.11 0.10 -0.06">
-        <joint name="bl_joint" type="hinge" axis="0 1 0" range="-0.6 0.6"/>
-        <geom name="bl_leg" type="capsule" size="0.012" fromto="0 0 0 0 0 -0.12" rgba="0.8 0.6 0.4 1"/>
-        <body name="BL_foot" pos="0 0 -0.12">
-          <joint name="bl_ankle" type="hinge" axis="0 1 0" range="-0.4 0.4"/>
-          <geom name="bl_foot" type="sphere" size="0.022" rgba="0.3 0.3 0.3 1"/>
-        </body>
-      </body>
-
-      <body name="BR" pos="-0.11 -0.10 -0.06">
-        <joint name="br_joint" type="hinge" axis="0 1 0" range="-0.6 0.6"/>
-        <geom name="br_leg" type="capsule" size="0.012" fromto="0 0 0 0 0 -0.12" rgba="0.8 0.6 0.4 1"/>
-        <body name="BR_foot" pos="0 0 -0.12">
-          <joint name="br_ankle" type="hinge" axis="0 1 0" range="-0.4 0.4"/>
-          <geom name="br_foot" type="sphere" size="0.022" rgba="0.3 0.3 0.3 1"/>
-        </body>
-      </body>
-
-      <body name="tail" pos="-0.19 0 0.02">
-        <joint name="tail_joint" type="hinge" axis="0 0 1" range="-0.8 0.8"/>
-        <geom name="tail_geom" type="capsule" size="0.01" fromto="0 0 0 -0.13 0 0.06" rgba="0.8 0.6 0.4 1"/>
-      </body>
-    </body>
   </worldbody>
-
-  <sensor>
-    <rangefinder name="front_rf" site="sensor_front"/>
-    <rangefinder name="left_rf"  site="sensor_left"/>
-    <rangefinder name="right_rf" site="sensor_right"/>
-  </sensor>
-
-  <actuator>
-    <motor name="neck_m" joint="neck" ctrlrange="-1 1"/>
-    <motor name="fl_m"   joint="fl_joint" ctrlrange="-1 1"/>
-    <motor name="fr_m"   joint="fr_joint" ctrlrange="-1 1"/>
-    <motor name="bl_m"   joint="bl_joint" ctrlrange="-1 1"/>
-    <motor name="br_m"   joint="br_joint" ctrlrange="-1 1"/>
-    <motor name="fl_a"   joint="fl_ankle" ctrlrange="-1 1"/>
-    <motor name="fr_a"   joint="fr_ankle" ctrlrange="-1 1"/>
-    <motor name="bl_a"   joint="bl_ankle" ctrlrange="-1 1"/>
-    <motor name="br_a"   joint="br_ankle" ctrlrange="-1 1"/>
-    <motor name="tail_m" joint="tail_joint" ctrlrange="-1 1"/>
-  </actuator>
 </mujoco>
