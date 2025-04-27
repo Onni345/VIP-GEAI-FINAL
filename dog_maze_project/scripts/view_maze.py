@@ -2,7 +2,7 @@ import mujoco
 import mujoco.viewer
 
 # Load your XML maze file
-model = mujoco.MjModel.from_xml_path("assets/maze_env.xml")
+model = mujoco.MjModel.from_xml_path("assets/maze.xml")
 data = mujoco.MjData(model)
 
 # Launch the built-in MuJoCo viewer

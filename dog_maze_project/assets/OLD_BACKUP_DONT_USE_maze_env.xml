@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<mujoco model="image_maze_clean">
+  <compiler angle="radian" coordinate="local"/>
+  <option gravity="0 0 -9.81" timestep="0.01" integrator="RK4"/>
+
+  <default>
+    <geom contype="1" conaffinity="1" friction="1 0.1 0.1" rgba="0.4 0.4 0.6 1"/>
+    <site size="0.25" rgba="0 1 0 1"/>
+  </default>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
+    <texture name="floor_tex" type="2d" builtin="checker" rgb1="0.2 0.2 0.2" rgb2="0.3 0.3 0.3" width="512" height="512"/>
+    <material name="floor_mat" texture="floor_tex" texrepeat="6 6" reflectance="0.2"/>
+    <material name="wall_mat"  rgba="0.55 0.6 0.75 1"/>
+    <material name="entry_mat" rgba="1 0.6 0 1"/>
+    <material name="exit_mat"  rgba="0 0.9 0.2 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Floor -->
+    <geom name="floor" type="plane" pos="0 0 -0.02" size="6 6 0.1" material="floor_mat"/>
+
+    <!-- Entry and Exit points -->
+    <site name="entry" pos="-3.6 1.8 0.1" size="0.45" material="entry_mat"/>
+    <site name="exit"  pos="3.6 -1.8 0.1" size="0.45" material="exit_mat"/>
+
+    <!-- Maze Walls (manual placement) -->
+    <!-- Example outer walls -->
+    <geom name="wall_left"   type="box" pos="-4 0 0.5" size="0.1 4 0.5" material="wall_mat"/>
+    <geom name="wall_right"  type="box" pos="4 0 0.5"  size="0.1 4 0.5" material="wall_mat"/>
+    <geom name="wall_top"    type="box" pos="0 4 0.5"  size="4 0.1 0.5" material="wall_mat"/>
+    <geom name="wall_bottom" type="box" pos="0 -4 0.5" size="4 0.1 0.5" material="wall_mat"/>
+
+    <!-- Example internal walls (you can copy and adjust positions) -->
+    <geom name="wall_1" type="box" pos="-2 2 0.5" size="0.1 2 0.5" material="wall_mat"/>
+    <geom name="wall_2" type="box" pos="2 2 0.5" size="0.1 2 0.5" material="wall_mat"/>
+    <geom name="wall_3" type="box" pos="0 0 0.5" size="2 0.1 0.5" material="wall_mat"/>
+    <geom name="wall_4" type="box" pos="0 -2 0.5" size="2 0.1 0.5" material="wall_mat"/>
+
+    <!-- Light -->
+    <light diffuse="0.85 0.85 0.85" pos="0 0 6" dir="0 0 -1"/>
+  </worldbody>
+</mujoco>
